@@ -77,6 +77,8 @@ class Admin_controller extends CI_Controller {
 	public function incidencia()
     {
         $crud = new grocery_CRUD();
+        $crud->set_relation('id_user','users','username');
+        $crud->set_relation('id_Estado','tipo_estado','descrip');
 		$crud->set_table('incidencia');
         $output = $crud->render();
  

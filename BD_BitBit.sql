@@ -1,6 +1,6 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Versión del servidor:         10.4.13-MariaDB - mariadb.org binary distribution
+-- Versión del servidor:         10.4.19-MariaDB - mariadb.org binary distribution
 -- SO del servidor:              Win64
 -- HeidiSQL Versión:             11.2.0.6213
 -- --------------------------------------------------------
@@ -14,12 +14,10 @@
 
 
 -- Volcando estructura de base de datos para bitbit
-DROP DATABASE IF EXISTS `bitbit`;
 CREATE DATABASE IF NOT EXISTS `bitbit` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE `bitbit`;
 
 -- Volcando estructura para tabla bitbit.captcha
-DROP TABLE IF EXISTS `captcha`;
 CREATE TABLE IF NOT EXISTS `captcha` (
   `captcha_id` bigint(13) unsigned NOT NULL AUTO_INCREMENT,
   `captcha_time` int(10) unsigned NOT NULL,
@@ -36,7 +34,6 @@ INSERT INTO `captcha` (`captcha_id`, `captcha_time`, `ip_address`, `word`) VALUE
 /*!40000 ALTER TABLE `captcha` ENABLE KEYS */;
 
 -- Volcando estructura para tabla bitbit.groups
-DROP TABLE IF EXISTS `groups`;
 CREATE TABLE IF NOT EXISTS `groups` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
@@ -54,11 +51,12 @@ INSERT INTO `groups` (`id`, `name`, `description`) VALUES
 /*!40000 ALTER TABLE `groups` ENABLE KEYS */;
 
 -- Volcando estructura para tabla bitbit.incidencia
-DROP TABLE IF EXISTS `incidencia`;
 CREATE TABLE IF NOT EXISTS `incidencia` (
   `id_incidencia` int(11) NOT NULL AUTO_INCREMENT,
   `id_user` int(11) unsigned DEFAULT NULL,
   `id_Estado` int(11) DEFAULT NULL,
+  `id_tecnico` int(10) unsigned DEFAULT NULL,
+  `id_material` int(10) DEFAULT NULL,
   `desc_averia` varchar(50) DEFAULT NULL,
   `Fecha_entrada` date DEFAULT NULL,
   `uuid` varchar(50) DEFAULT NULL,
@@ -68,7 +66,6 @@ CREATE TABLE IF NOT EXISTS `incidencia` (
   `Diagnostico_prev` longtext DEFAULT NULL,
   `Telf` varchar(50) DEFAULT NULL,
   `tiempo_reparcion` varchar(50) DEFAULT NULL,
-  `id_tecnico` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id_incidencia`),
   KEY `id_user` (`id_user`),
   KEY `id_Estado` (`id_Estado`),
@@ -78,14 +75,15 @@ CREATE TABLE IF NOT EXISTS `incidencia` (
   CONSTRAINT `id_tecnico` FOREIGN KEY (`id_tecnico`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla bitbit.incidencia: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla bitbit.incidencia: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `incidencia` DISABLE KEYS */;
-INSERT INTO `incidencia` (`id_incidencia`, `id_user`, `id_Estado`, `desc_averia`, `Fecha_entrada`, `uuid`, `Marca`, `Modelo`, `Numero_serie`, `Diagnostico_prev`, `Telf`, `tiempo_reparcion`, `id_tecnico`) VALUES
-	(33, 31, 3, 'a', '2021-05-04', NULL, 'a', 'a', 'a', '<h3 style="color:red;">\n	a</h3>\n', 'a', 'a', 29);
+INSERT INTO `incidencia` (`id_incidencia`, `id_user`, `id_Estado`, `id_tecnico`, `id_material`, `desc_averia`, `Fecha_entrada`, `uuid`, `Marca`, `Modelo`, `Numero_serie`, `Diagnostico_prev`, `Telf`, `tiempo_reparcion`) VALUES
+	(33, 31, 3, 29, NULL, 'a', '2021-05-04', NULL, 'a', 'a', 'a', '<h3 style="color:red;">\n	a</h3>\n', 'a', 'a'),
+	(39, 32, 2, NULL, NULL, 'cambio de bateria', '2021-05-11', NULL, 'Samsung', 'A31', '1234567887RTYUIJHGF', '<p>\n	cambio</p>\n', '63245789', '789652'),
+	(40, 31, 4, NULL, NULL, 'cambio de bateria', '2021-05-26', NULL, 'Lenovo ', 'Y50-70', '1234567887RTYUIJHGF', '<p>\n	pantalla da&ntilde;ada</p>\n', 'asdad', 'adads');
 /*!40000 ALTER TABLE `incidencia` ENABLE KEYS */;
 
 -- Volcando estructura para tabla bitbit.infocontacto
-DROP TABLE IF EXISTS `infocontacto`;
 CREATE TABLE IF NOT EXISTS `infocontacto` (
   `id_InfoContacto` int(11) NOT NULL,
   `nombre` varchar(50) DEFAULT NULL,
@@ -99,24 +97,7 @@ CREATE TABLE IF NOT EXISTS `infocontacto` (
 /*!40000 ALTER TABLE `infocontacto` DISABLE KEYS */;
 /*!40000 ALTER TABLE `infocontacto` ENABLE KEYS */;
 
--- Volcando estructura para tabla bitbit.keys
-DROP TABLE IF EXISTS `keys`;
-CREATE TABLE IF NOT EXISTS `keys` (
-  `id` int(11) NOT NULL,
-  `key` varchar(40) NOT NULL,
-  `level` int(2) NOT NULL,
-  `ignore_limits` tinyint(1) NOT NULL DEFAULT 0,
-  `is_private_key` tinyint(1) NOT NULL DEFAULT 0,
-  `ip_addresses` text DEFAULT NULL,
-  `date_created` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- Volcando datos para la tabla bitbit.keys: ~0 rows (aproximadamente)
-/*!40000 ALTER TABLE `keys` DISABLE KEYS */;
-/*!40000 ALTER TABLE `keys` ENABLE KEYS */;
-
 -- Volcando estructura para tabla bitbit.login_attempts
-DROP TABLE IF EXISTS `login_attempts`;
 CREATE TABLE IF NOT EXISTS `login_attempts` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `ip_address` varchar(45) NOT NULL,
@@ -125,14 +106,23 @@ CREATE TABLE IF NOT EXISTS `login_attempts` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla bitbit.login_attempts: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla bitbit.login_attempts: ~11 rows (aproximadamente)
 /*!40000 ALTER TABLE `login_attempts` DISABLE KEYS */;
 INSERT INTO `login_attempts` (`id`, `ip_address`, `login`, `time`) VALUES
-	(23, '::1', 'Tecnic', 1620988056);
+	(39, '::1', 'Trabajador', 1621604271),
+	(40, '::1', 'Trabajador', 1621604280),
+	(41, '::1', 'Tecnico', 1621604293),
+	(42, '::1', 'Tecnico', 1621604300),
+	(43, '::1', 'Tecnico', 1621604323),
+	(44, '::1', 'Client', 1621604343),
+	(45, '::1', 'Client ', 1621604351),
+	(46, '::1', 'Client', 1621604368),
+	(48, '::1', 'adas', 1621606122),
+	(49, '::1', 'asdad', 1621606129),
+	(50, '::1', 'Client', 1621607110);
 /*!40000 ALTER TABLE `login_attempts` ENABLE KEYS */;
 
 -- Volcando estructura para tabla bitbit.logs
-DROP TABLE IF EXISTS `logs`;
 CREATE TABLE IF NOT EXISTS `logs` (
   `id` int(11) NOT NULL,
   `uri` varchar(255) NOT NULL,
@@ -151,9 +141,9 @@ CREATE TABLE IF NOT EXISTS `logs` (
 /*!40000 ALTER TABLE `logs` ENABLE KEYS */;
 
 -- Volcando estructura para tabla bitbit.mail
-DROP TABLE IF EXISTS `mail`;
 CREATE TABLE IF NOT EXISTS `mail` (
   `id_mail` int(11) NOT NULL,
+  `Columna 2` int(11) NOT NULL,
   `de:` varchar(50) DEFAULT NULL,
   `para:` varchar(50) DEFAULT NULL,
   `mensaje` varchar(200) DEFAULT NULL,
@@ -165,9 +155,8 @@ CREATE TABLE IF NOT EXISTS `mail` (
 /*!40000 ALTER TABLE `mail` ENABLE KEYS */;
 
 -- Volcando estructura para tabla bitbit.material
-DROP TABLE IF EXISTS `material`;
 CREATE TABLE IF NOT EXISTS `material` (
-  `id_material` int(11) NOT NULL,
+  `id_material` int(11) NOT NULL AUTO_INCREMENT,
   `Descripcion` varchar(50) NOT NULL DEFAULT '',
   PRIMARY KEY (`id_material`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -177,13 +166,16 @@ CREATE TABLE IF NOT EXISTS `material` (
 /*!40000 ALTER TABLE `material` ENABLE KEYS */;
 
 -- Volcando estructura para tabla bitbit.material_incidencia
-DROP TABLE IF EXISTS `material_incidencia`;
 CREATE TABLE IF NOT EXISTS `material_incidencia` (
-  `descrip` varchar(50) DEFAULT NULL,
-  `id_material` int(11) NOT NULL,
-  `id_usuario` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id_material`),
-  KEY `id_usuario` (`id_usuario`)
+  `id` int(11) NOT NULL,
+  `id_incidencia` int(11) DEFAULT NULL,
+  `id_material` int(11) DEFAULT NULL,
+  `descrip` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_usuario` (`id_incidencia`) USING BTREE,
+  KEY `id_material` (`id_material`),
+  CONSTRAINT `id_incidencia` FOREIGN KEY (`id_incidencia`) REFERENCES `incidencia` (`id_incidencia`),
+  CONSTRAINT `id_material` FOREIGN KEY (`id_material`) REFERENCES `material` (`id_material`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Volcando datos para la tabla bitbit.material_incidencia: ~0 rows (aproximadamente)
@@ -191,7 +183,6 @@ CREATE TABLE IF NOT EXISTS `material_incidencia` (
 /*!40000 ALTER TABLE `material_incidencia` ENABLE KEYS */;
 
 -- Volcando estructura para tabla bitbit.noticia
-DROP TABLE IF EXISTS `noticia`;
 CREATE TABLE IF NOT EXISTS `noticia` (
   `Descripcion` varchar(50) DEFAULT NULL,
   `id_Usuario` int(11) NOT NULL,
@@ -204,26 +195,7 @@ CREATE TABLE IF NOT EXISTS `noticia` (
 /*!40000 ALTER TABLE `noticia` DISABLE KEYS */;
 /*!40000 ALTER TABLE `noticia` ENABLE KEYS */;
 
--- Volcando estructura para tabla bitbit.noticies
-DROP TABLE IF EXISTS `noticies`;
-CREATE TABLE IF NOT EXISTS `noticies` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) DEFAULT NULL,
-  `subtitle` varchar(255) DEFAULT NULL,
-  `content` varchar(255) DEFAULT NULL,
-  `data` date DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- Volcando datos para la tabla bitbit.noticies: ~2 rows (aproximadamente)
-/*!40000 ALTER TABLE `noticies` DISABLE KEYS */;
-INSERT INTO `noticies` (`id`, `title`, `subtitle`, `content`, `data`) VALUES
-	(2, 'Segona noticia', 'Subtitol segona noticia', 'Contingut segona noticia', '2021-03-01'),
-	(3, 'Tercera noticia\r\n', 'Subtitol tercera noticia', 'Contingut tercera noticia', '2021-03-01');
-/*!40000 ALTER TABLE `noticies` ENABLE KEYS */;
-
 -- Volcando estructura para tabla bitbit.tareas
-DROP TABLE IF EXISTS `tareas`;
 CREATE TABLE IF NOT EXISTS `tareas` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `id_incidencia` int(11) NOT NULL,
@@ -241,7 +213,6 @@ CREATE TABLE IF NOT EXISTS `tareas` (
 /*!40000 ALTER TABLE `tareas` ENABLE KEYS */;
 
 -- Volcando estructura para tabla bitbit.tipo_estado
-DROP TABLE IF EXISTS `tipo_estado`;
 CREATE TABLE IF NOT EXISTS `tipo_estado` (
   `id_Estado` int(11) NOT NULL,
   `Descrip` varchar(50) DEFAULT NULL,
@@ -257,21 +228,7 @@ INSERT INTO `tipo_estado` (`id_Estado`, `Descrip`) VALUES
 	(4, 'Entregado');
 /*!40000 ALTER TABLE `tipo_estado` ENABLE KEYS */;
 
--- Volcando estructura para tabla bitbit.tokens
-DROP TABLE IF EXISTS `tokens`;
-CREATE TABLE IF NOT EXISTS `tokens` (
-  `tokenid` varchar(36) NOT NULL,
-  `subject` varchar(36) NOT NULL,
-  `expiration` int(11) NOT NULL,
-  PRIMARY KEY (`tokenid`,`subject`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- Volcando datos para la tabla bitbit.tokens: ~0 rows (aproximadamente)
-/*!40000 ALTER TABLE `tokens` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tokens` ENABLE KEYS */;
-
 -- Volcando estructura para tabla bitbit.users
-DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `ip_address` varchar(45) NOT NULL,
@@ -299,17 +256,17 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `uc_remember_selector` (`remember_selector`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla bitbit.users: ~4 rows (aproximadamente)
+-- Volcando datos para la tabla bitbit.users: ~6 rows (aproximadamente)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `email`, `activation_selector`, `activation_code`, `forgotten_password_selector`, `forgotten_password_code`, `forgotten_password_time`, `remember_selector`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
-	(1, '127.0.0.1', 'administrator', '$2y$10$.gQBTIc.W1pmHeSVzYB6pudj2aO.V6bHmFGmIL1ngdxoMLokCUhLC', 'admin@admin.com', NULL, '', NULL, NULL, NULL, NULL, NULL, 1268889823, 1620914750, 1, 'Admin', 'istrator', 'ADMIN', 0),
-	(28, '', 'Gestor', '$2y$10$IPCPdTC4DONvezgCxL42CuCES40Je9aEql0l8t/L7mGydA5NI5pxe', 'gestor@gestor.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1620993128, 1, 'gestor', 'gestor', NULL, 611111111),
-	(29, '', 'Trabajador', '$2y$10$2NvNaYNNpurimaScEtw/tuvnKoensNWS4Yd0ETYiAWfrvQiQ22PD2', 'trabajador@trabajador.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1620993152, 1, 'Trabajador', 'trabajador', NULL, 611111111),
-	(31, '', 'Client', '$2y$10$FaKC.yPlSb4w6yb4cg93BuRoCTQXkjwwZYVZEEWSnicBhtklNZQT6', 'a@a.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1620992740, 1, 'Client', 'Client', NULL, 111111111);
+	(1, '127.0.0.1', 'administrator', '$2y$10$.gQBTIc.W1pmHeSVzYB6pudj2aO.V6bHmFGmIL1ngdxoMLokCUhLC', 'admin@admin.com', NULL, '', NULL, NULL, NULL, NULL, NULL, 1268889823, 1621608746, 1, 'Admin', 'istrator', 'ADMIN', 0),
+	(28, '', 'Gestor', '$2y$10$IPCPdTC4DONvezgCxL42CuCES40Je9aEql0l8t/L7mGydA5NI5pxe', 'gestor@gestor.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1621607835, 1, 'gestor', 'gestor', NULL, 611111111),
+	(29, '', 'Trabajador', '$2y$10$2NvNaYNNpurimaScEtw/tuvnKoensNWS4Yd0ETYiAWfrvQiQ22PD2', 'trabajador@trabajador.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1621523470, 1, 'Trabajador', 'trabajador', NULL, 611111111),
+	(31, '', 'Client', '$2y$10$FaKC.yPlSb4w6yb4cg93BuRoCTQXkjwwZYVZEEWSnicBhtklNZQT6', 'a@a.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1621524823, 1, 'Client', 'Client', NULL, 111111111),
+	(32, '::1', 'bruno', '$2y$10$.TPgRsKYCF6gWO6Y3bYVDupu1qv06ZBfDcjGb83Dr7yTp1CwdvC6K', 'bruno@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1621006035, 1621629335, 1, 'bruno', 'andia', NULL, 638475213);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 -- Volcando estructura para tabla bitbit.users_groups
-DROP TABLE IF EXISTS `users_groups`;
 CREATE TABLE IF NOT EXISTS `users_groups` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned NOT NULL,
@@ -331,7 +288,8 @@ INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
 	(3, 1, 4),
 	(16, 28, 4),
 	(15, 29, 3),
-	(14, 31, 2);
+	(14, 31, 2),
+	(17, 32, 2);
 /*!40000 ALTER TABLE `users_groups` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

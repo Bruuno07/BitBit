@@ -102,7 +102,7 @@ $route['todasLasIncidencias/export'] = 'Gestor_controller/todasLasIncidencias/ex
 
 
 /** Anuncios*/
-$route['Anuncios'] = 'Anuncios_controller/anuncios'; 
+$route['Anuncios'] = 'GroceryNoticies_controller/anuncios'; 
 
 
 
