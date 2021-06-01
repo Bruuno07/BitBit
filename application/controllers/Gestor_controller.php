@@ -27,14 +27,14 @@ class Gestor_controller extends CI_Controller
             $crud->set_theme('incidencies');
             $crud->set_relation('id_user', 'users', 'username');
             $crud->set_relation('id_tecnico', 'users', 'username');
+            $crud->set_relation('id_Estado','tipo_estado','descrip');
             $crud->fields('uuid');
             $crud->field_type('uuid', 'invisible');
-            $crud->field_type('id_Estado', 'invisible');
             $crud->callback_before_insert(array($this,'uuid_callback'));
-            $crud->columns('id_incidencia', 'id_user', 'id_Estado', 'desc_averia', 'Fecha_entrada', 'Diagnostico_prev');
+            $crud->columns('id_incidencia', 'id_user', 'id_Estado','id_tecnico', 'desc_averia', 'Fecha_entrada', 'Diagnostico_prev');
 
-            $crud->add_fields('id_user','desc_averia','Fecha_entrada','Marca','Modelo','Numero_serie','Diagnostico_prev','Telf','tiempo_reparcion');
-            $crud->edit_fields('id_tecnico','Diagnostico_prev');
+            $crud->add_fields('id_user','desc_averia','id_Estado','Fecha_entrada','Marca','Modelo','Numero_serie','Diagnostico_prev','Telf','tiempo_reparcion');
+            $crud->edit_fields('id_tecnico','id_Estado','Diagnostico_prev');
 
 
             
@@ -76,9 +76,6 @@ class Gestor_controller extends CI_Controller
         return $post_array;
 
     }
-
-
-
 
     function output($output = null)
     {

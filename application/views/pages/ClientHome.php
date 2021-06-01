@@ -53,7 +53,7 @@
         <div class="row d-flex justify-content-center">
             <?php foreach ($incidencies as $incidencies_item) : ?>
                 <div class="card text-center">
-                    <div class="card-header"><?php echo $incidencies_item['desc_averia'] ?></div>
+                    <div class="card-header">Descripcion :<?php echo $incidencies_item['desc_averia'] ?></div>
                     <div class="card-body">
                         <!-- <h5 class="card-title"><?php echo $incidencies_item[''] ?></h5> -->
                         <p class="card-text">
@@ -126,9 +126,11 @@
                                 </p>
 
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <div class="modal-footer">                          
+                                <a type="button"  data-dismiss="modal"  href="<?php echo site_url('') ?>"><img src="<?php echo base_url("assets/img/pdf.png") ?>" /></a>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal" >Cerrar</button>
                             </div>
+
                         </div>
                     </div>
                 </div>

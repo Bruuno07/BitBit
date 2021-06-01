@@ -39,7 +39,7 @@
             <a type="button" href="<?php echo site_url('') ?>" class="btn btn-dark mr-1">Mis Repaciones</a>
           </li> 
           <li class="nav-item ">
-            <a type="button" href="<?php echo site_url('') ?>" class="btn btn-dark mr-1">Anuncios</a>
+            <a type="button" href="<?php echo site_url('') ?>" class="btn btn-dark mr-1">Noticia</a>
           </li>
           <!-- <li class="nav-item ">
             <a type="button" href="<?php echo site_url('nuevareparacion') ?>" class="btn btn-outline-secondary mr-3">Nueva reparación</a>

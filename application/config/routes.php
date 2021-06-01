@@ -69,6 +69,7 @@ $route['incidencia'] = 'Admin_controller/incidencia';
 $route['infocontacto'] = 'Admin_controller/infocontacto'; 
 $route['mail'] = 'Admin_controller/mail'; 
 $route['material'] = 'Admin_controller/material'; 
+$route['noticia'] = 'Admin_controller/noticia'; 
 
 $route['passwdchange'] = 'UpdatePassword_controller/index'; 
 $route['updatePassword'] = 'UpdatePassword_controller/updatePassword'; 
@@ -99,13 +100,11 @@ $route['todasLasIncidencias/export'] = 'Gestor_controller/todasLasIncidencias/ex
 
 
 
-
-
 /** Anuncios*/
 $route['Anuncios'] = 'GroceryNoticies_controller/anuncios'; 
 
-
-
+/**trabajador tecnico */
+$route['incidenciaTecnic']='Tecnic_controller/incidenciaTecnic';
 
 
 
@@ -127,7 +126,7 @@ $route['noticies/delete/(:any)'] = 'noticies_controller/delete/$1';
 
 $route['noticies/(:any)'] = 'noticies_controller/view/$1'; 
 
-
+/**pdf */
 $route['pdf'] = "pdf_controller/index";
 
 $route['api/noticies'] = "Api_Noticies/noticies";

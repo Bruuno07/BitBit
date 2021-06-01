@@ -66,6 +66,9 @@
           <li class="nav-item ">
             <a type="button" href="<?php echo site_url('material') ?>"  class="btn btn-dark mr-2">Material</a>
           </li>
+          <li class="nav-item ">
+            <a type="button" href="<?php echo site_url('noticia') ?>"  class="btn btn-dark mr-2">Noticia</a>
+          </li>
 
         </ul>
         <span class="text text-white mr-5"><img src="<?php echo base_url("assets/img/user.png") ?>" /> <?php echo $user->first_name; ?> </span>

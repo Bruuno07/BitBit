@@ -64,26 +64,40 @@ unset($_SESSION['access']);
         <div class="row d-flex justify-content-center">
             <?php foreach ($incidencies as $incidencies_item) : ?>
                 <div class="card text-center">
-                    <div class="card-header"><?php echo $incidencies_item['desc_averia'] ?></div>
+                    <div class="card-header"> Nueva Tarea </div>
                     <div class="card-body">
                         <!-- <h5 class="card-title"><?php echo $incidencies_item[''] ?></h5> -->
                         <p class="card-text">
                             <?php echo $incidencies_item['Diagnostico_prev'] ?>
                         </p>
-
                         <hr>
 
-                        <form action="" method="POST" id="estado">
+                        <div class="col col-sm-9 text-primary font-weight-bold py-1" style="font-size:18px;">
+                            <select class="form-control" id="estatus" name="estado">
+                                <?php if ($incidencies_item['id_Estado'] == '') { ?>
+                                    <span><img src="<?php echo base_url("assets/img/Notstarted.png") ?>" /> No asignado</span>
+                                <?php } ?>
 
+                                <?php if ($incidencies_item['id_Estado'] == 1) { ?>
+                                    <span><img src="<?php echo base_url("assets/img/Notstarted.png") ?>" /> No empezado</span>
+                                <?php } ?>
 
-                            <label for="estado">Estado: </label>
-                            <select class="form-control" name="estado" id="estado" form="estado">
-                                <?php foreach ($estados as $estados_item) : ?>
-                                    <option value="<?php echo $estados_item['id_Estado'] ?>"><?php echo $estados_item['Descrip'] ?></option>
-                                <?php endforeach; ?>
+                                <?php if ($incidencies_item['id_Estado'] == 2) { ?>
+                                    <span><img src="<?php echo base_url("assets/img/Working.png") ?>" /> En curso</span>
+                                <?php } ?>
 
+                                <?php if ($incidencies_item['id_Estado'] == 3) { ?>
+                                    <span><img src="<?php echo base_url("assets/img/Completado.png") ?>" /> Completado</span>
+                                <?php } ?>
+
+                                <?php if ($incidencies_item['id_Estado'] == 4) { ?>
+                                    <span><img src="<?php echo base_url("assets/img/Enviado.png") ?>" /> Entregado</span>
+                                <?php } ?>
                             </select>
-                        </form>
+                        </div>
+
+
+
 
 
 
@@ -127,10 +141,12 @@ unset($_SESSION['access']);
                                 <p class="card-text">
                                     NUMERO DE SERIE: <?php echo $incidencies_item['Numero_serie'] ?>
                                 </p>
-
+                                <p>
+                                    DESCRIPCION AVERIA: <?php echo $incidencies_item['desc_averia'] ?>
+                                </p>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                             </div>
                         </div>
                     </div>

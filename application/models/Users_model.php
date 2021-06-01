@@ -14,11 +14,5 @@ class Users_model  extends CI_Model
         $query =  $this->db->query("SELECT id FROM users ORDER BY id DESC LIMIT 1");
         return $query->num_rows();
     }
-
-  
-
-
-    
-   
 }
 
