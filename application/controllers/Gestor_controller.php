@@ -33,7 +33,7 @@ class Gestor_controller extends CI_Controller
             $crud->callback_before_insert(array($this,'uuid_callback'));
             $crud->columns('id_incidencia', 'id_user', 'id_Estado','id_tecnico', 'desc_averia', 'Fecha_entrada', 'Diagnostico_prev');
 
-            $crud->add_fields('id_user','desc_averia','id_Estado','Fecha_entrada','Marca','Modelo','Numero_serie','Diagnostico_prev','Telf','tiempo_reparcion');
+            $crud->add_fields('id_user','id_Estado','id_tecnico','desc_averia','Fecha_entrada','Marca','Modelo','Numero_serie','Diagnostico_prev','Telf','tiempo_reparcion');
             $crud->edit_fields('id_tecnico','id_Estado','Diagnostico_prev');
 
 

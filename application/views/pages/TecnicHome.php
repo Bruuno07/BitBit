@@ -72,34 +72,21 @@ unset($_SESSION['access']);
                         </p>
                         <hr>
 
-                        <div class="col col-sm-9 text-primary font-weight-bold py-1" style="font-size:18px;">
-                            <select class="form-control" id="estatus" name="estado">
-                                <?php if ($incidencies_item['id_Estado'] == '') { ?>
-                                    <span><img src="<?php echo base_url("assets/img/Notstarted.png") ?>" /> No asignado</span>
-                                <?php } ?>
-
-                                <?php if ($incidencies_item['id_Estado'] == 1) { ?>
-                                    <span><img src="<?php echo base_url("assets/img/Notstarted.png") ?>" /> No empezado</span>
-                                <?php } ?>
-
-                                <?php if ($incidencies_item['id_Estado'] == 2) { ?>
-                                    <span><img src="<?php echo base_url("assets/img/Working.png") ?>" /> En curso</span>
-                                <?php } ?>
-
-                                <?php if ($incidencies_item['id_Estado'] == 3) { ?>
-                                    <span><img src="<?php echo base_url("assets/img/Completado.png") ?>" /> Completado</span>
-                                <?php } ?>
-
-                                <?php if ($incidencies_item['id_Estado'] == 4) { ?>
-                                    <span><img src="<?php echo base_url("assets/img/Enviado.png") ?>" /> Entregado</span>
-                                <?php } ?>
-                            </select>
-                        </div>
-
-
-
-
-
+                        <select class="form-control" id="estado" name="estado">
+                            <?php
+                            if (isset($estado)) {
+                                foreach ($estados as $estado) {
+                            ?>
+                                    <option <?php
+                                            if ($inci['id_Estado'] == $incidencies_item['id_Estado']) {
+                                                echo 'selected="selected"';
+                                            }
+                                            ?> value="<?php echo $incidencies_item['id_Estado']; ?>"><?php echo $incidencies_item['desc']; ?></option>
+                            <?php
+                                }
+                            }
+                            ?>
+                        </select>
 
                         <br>
                         <hr>
@@ -118,8 +105,6 @@ unset($_SESSION['access']);
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel"><?php echo $incidencies_item['Diagnostico_prev'] ?></h5>
-
-
 
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
